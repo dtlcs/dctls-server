@@ -1,7 +1,27 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mysql = require('mysql');
-var connection = mysql.createConnection(process.env.JAWSDB_URL);
+
+var connection = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    dateStrings:true,
+    database: "j95ambgc4f7zrfai"
+});
+
+// Change connection pool if in the Heroku
+if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
+    // var connection = mysql.createConnection(process.env.JAWSDB_URL);
+
+    var connection = mysql.createPool({
+        host: "yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        user: "ae8ptu9hakhbthtj",
+        password: "jy5105xcnjkesh5i",
+        dateStrings:true,
+        database: "j95ambgc4f7zrfai"
+    });
+}
 
 var app = express();
 app.use(bodyParser.json());
@@ -16,11 +36,10 @@ var server = app.listen(process.env.PORT || 8080, function () {
 function handleError(res, reason, message, code) {
     console.log("ERROR: " + reason);
     res.status(code || 500).json({"error": message});
+    throw err;
 }
 
 app.get("/api/users", function(req, res) {
-    connection.connect();
-
     connection.query('SELECT * FROM user', function(err, rows, fields) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
@@ -28,6 +47,4 @@ app.get("/api/users", function(req, res) {
             res.status(200).json(rows);
         }
     });
-
-    connection.end();
 });
