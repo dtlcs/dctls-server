@@ -3,6 +3,9 @@ var bodyParser = require("body-parser");
 var mysql = require('mysql');
 var connection = mysql.createConnection(process.env.JAWSDB_URL);
 
+var app = express();
+app.use(bodyParser.json());
+
 // Initialize the app.
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
