@@ -10,7 +10,10 @@ connection.end();
 
 
 
+// Change connection pool if in the Heroku
+if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
 
+}
 
 
 

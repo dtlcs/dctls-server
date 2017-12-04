@@ -2,26 +2,23 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mysql = require('mysql');
 
+// var connection = mysql.createPool({
+//     host: "localhost",
+//     user: "root",
+//     password: "root",
+//     dateStrings:true,
+//     database: "j95ambgc4f7zrfai"
+// });
+
+// var connection = mysql.createConnection(process.env.JAWSDB_URL);
+
 var connection = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "root",
+    host: "yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "ae8ptu9hakhbthtj",
+    password: "jy5105xcnjkesh5i",
     dateStrings:true,
     database: "j95ambgc4f7zrfai"
 });
-
-// Change connection pool if in the Heroku
-if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
-    // var connection = mysql.createConnection(process.env.JAWSDB_URL);
-
-    var connection = mysql.createPool({
-        host: "yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-        user: "ae8ptu9hakhbthtj",
-        password: "jy5105xcnjkesh5i",
-        dateStrings:true,
-        database: "j95ambgc4f7zrfai"
-    });
-}
 
 var app = express();
 app.use(bodyParser.json());
