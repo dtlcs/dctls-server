@@ -2,21 +2,13 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mysql = require('mysql');
 
-// var connection = mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     dateStrings:true,
-//     database: "j95ambgc4f7zrfai"
-// });
-
 // var connection = mysql.createConnection(process.env.JAWSDB_URL);
 
 var connection = mysql.createPool({
     host: "yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user: "ae8ptu9hakhbthtj",
     password: "jy5105xcnjkesh5i",
-    dateStrings:true,
+    dateStrings: true,
     database: "j95ambgc4f7zrfai"
 });
 
@@ -36,8 +28,9 @@ function handleError(res, reason, message, code) {
     throw err;
 }
 
-app.get("/api/users", function(req, res) {
-    connection.query('SELECT * FROM user', function(err, rows, fields) {
+// Get all users
+app.get("/api/users/all", function (req, res) {
+    connection.query('SELECT * FROM user', function (err, rows, fields) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
         } else {
@@ -45,3 +38,68 @@ app.get("/api/users", function(req, res) {
         }
     });
 });
+
+// Add junction
+app.post("/api/junction/add", function (req, res) {
+    var newJunction = req.body;
+    newJunction.createDate = new Date();
+
+    if (!req.body.name) {
+        handleError(res, "Invalid user input", "Must provide a name.", 400);
+    } else if (!req.body.street) {
+        handleError(res, "Invalid user input", "Must provide a street.", 400);
+    } else if (!req.body.city) {
+        handleError(res, "Invalid user input", "Must provide a city.", 400);
+    } else if (!req.body.province) {
+        handleError(res, "Invalid user input", "Must provide a province.", 400);
+    } else if (!req.body.postal_code) {
+        handleError(res, "Invalid user input", "Must provide a postal code.", 400);
+    } else if (!req.body.latitude) {
+        handleError(res, "Invalid user input", "Must provide a latitude value.", 400);
+    } else if (!req.body.longitude) {
+        handleError(res, "Invalid user input", "Must provide a longitude value.", 400);
+    }
+
+    connection.query(`SELECT * FROM junction WHERE name = '${req.body.name}'`, function (err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to add junction.");
+        } else if (rows.length > 0) {
+            res.status(400).json("Junction name already exist.");
+        } else {
+            connection.query(`INSERT INTO junction (name, description, street, city, province, postal_code, latitude, longitude)
+                VALUES (
+                '${req.body.name}',
+                '${req.body.description}',
+                '${req.body.street}',
+                '${req.body.city}',
+                '${req.body.province}',
+                '${req.body.postal_code}',
+                '${req.body.latitude}',
+                '${req.body.longitude}'
+                )`, function (err, result) {
+                if (err) {
+                    handleError(res, err.message, "Failed to add junction.");
+                } else {
+                    res.status(200).json(result);
+                }
+            });
+        }
+    });
+});
+
+// Get junction name list
+app.get("/api/junctions/name", function (req, res) {
+    connection.query('SELECT name FROM junction', function (err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to get junction names.");
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+});
+
+// Get junction by id
+
+// Update junction
+
+// Delete junction
