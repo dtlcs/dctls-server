@@ -109,6 +109,9 @@ app.post("/api/user/authenticate", function (req, res) {
     var newJunction = req.body;
     newJunction.createDate = new Date();
 
+    console.log(req.body.username);
+    console.log(req.body.password);
+
     if (!req.body.username) {
         handleError(res, "Invalid user input", "Must provide a username.", 400);
     } else if (!req.body.password) {
