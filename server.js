@@ -103,3 +103,27 @@ app.get("/api/junctions/name", function (req, res) {
 // Update junction
 
 // Delete junction
+
+// Authenticate user
+app.post("/api/user/authenticate", function (req, res) {
+    var newJunction = req.body;
+    newJunction.createDate = new Date();
+
+    if (!req.body.username) {
+        handleError(res, "Invalid user input", "Must provide a username.", 400);
+    } else if (!req.body.password) {
+        handleError(res, "Invalid user input", "Must provide a password.", 400);
+    }
+
+    connection.query(`SELECT * FROM user 
+     INNER JOIN login ON user.id = login.user_id 
+     WHERE username = '${req.body.username}' AND password = '${req.body.password}'`, function (err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to authenticate.");
+        } else if (rows.length > 0) {
+            res.status(200).json(rows);
+        } else{
+            res.status(400).json("Username/password incorrect.");
+        }
+    });
+});
