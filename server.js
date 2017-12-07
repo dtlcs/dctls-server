@@ -109,9 +109,6 @@ app.post("/api/user/authenticate", function (req, res) {
     var newJunction = req.body;
     newJunction.createDate = new Date();
 
-    console.log(req.body.username);
-    console.log(req.body.password);
-
     if (!req.body.username) {
         handleError(res, "Invalid user input", "Must provide a username.", 400);
     } else if (!req.body.password) {
@@ -127,6 +124,23 @@ app.post("/api/user/authenticate", function (req, res) {
             res.status(200).json(rows);
         } else{
             res.status(400).json("Username/password incorrect.");
+        }
+    });
+});
+
+// Get user junction list
+app.get("/api/user/junctions", function (req, res) {
+    if (!req.body.userId) {
+        handleError(res, "Invalid user input", "Must provide a user ID.", 400);
+    }
+
+    connection.query(`SELECT * FROM junction 
+    INNER JOIN junction_has_traffic_officer junction.id = junction_has_traffic_officer.junction_id 
+    WHERE junction_has_traffic_officer.traffic_officer_id = '${req.body.userId}'`, function (err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to get junction list.");
+        } else {
+            res.status(200).json(rows);
         }
     });
 });
