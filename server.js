@@ -130,6 +130,7 @@ app.post("/api/user/authenticate", function (req, res) {
 
 // Get user junction list
 app.get("/api/user/junctions", function (req, res) {
+    console.log(req.body);
     if (!req.body.userId) {
         handleError(res, "Invalid user input", "Must provide a user ID.", 400);
     }
