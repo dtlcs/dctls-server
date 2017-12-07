@@ -135,12 +135,13 @@ app.get("/api/user/junctions", function (req, res) {
     }
 
     connection.query(`SELECT * FROM junction 
-    INNER JOIN junction_has_traffic_officer junction.id = junction_has_traffic_officer.junction_id 
+    INNER JOIN junction_has_traffic_officer ON junction.id = junction_has_traffic_officer.junction_id 
     WHERE junction_has_traffic_officer.traffic_officer_id = '${req.body.userId}'`, function (err, rows, fields) {
         if (err) {
             handleError(res, err.message, "Failed to get junction list.");
         } else {
             res.status(200).json(rows);
+            console.log(res);
         }
     });
 });
