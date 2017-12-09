@@ -275,3 +275,24 @@ app.post("/api/user/update", function(req, res) {
     });
 });
 
+// Delete user
+app.post("/api/user/delete", function(req, res) {
+    if (!req.body.id) {
+        handleError(res, "Invalid user input", "Must provide a user ID.", 400);
+    }
+
+    connection.query(`DELETE FROM login WHERE user_id = '${req.body.id}'`, function(err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to delete user.");
+        } else {
+            connection.query(`DELETE FROM user WHERE id = '${req.body.id}'`, function(err2, rows, fields) {
+                if (err2) {
+                    handleError(res, err2.message, "Failed to delete user.");
+                } else {
+                    res.status(204);
+                    res.end();
+                }
+            });
+        }
+    });
+});
