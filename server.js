@@ -24,7 +24,7 @@ var server = app.listen(process.env.PORT || 8080, function() {
 });
 
 // Generic error handler used by all endpoints.
-function handleError(res, reason, message, code) {
+function handleError(res, reason, message, code, err) {
     console.log("ERROR: " + reason);
     res.status(code || 500).json({
         "error": message
@@ -149,7 +149,7 @@ app.get("/api/user/junctions/:userid", function(req, res) {
         }
     });
 });
-
+  
 // Add user
 app.post("/api/user/add", function(req, res) {
     if (!req.body.name) {
