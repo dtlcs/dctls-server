@@ -73,6 +73,8 @@ app.post("/api/junction/add", function(req, res) {
         handleError(res, "Invalid user input", "Must provide a latitude value.", 400);
     } else if (!req.body.longitude) {
         handleError(res, "Invalid user input", "Must provide a longitude value.", 400);
+    } else if (!req.body.pi_mac) {
+        handleError(res, "Invalid user input", "Must provide a R-Pi MAC address.", 400);
     }
 
     connection.query(`SELECT * FROM junction WHERE name = '${req.body.name}'`, function(err, rows, fields) {
@@ -81,7 +83,7 @@ app.post("/api/junction/add", function(req, res) {
         } else if (rows.length > 0) {
             res.status(400).json("Junction name already exist.");
         } else {
-            connection.query(`INSERT INTO junction (name, description, street, city, province, postal_code, latitude, longitude)
+            connection.query(`INSERT INTO junction (name, description, street, city, province, postal_code, latitude, longitude, pi_mac)
                 VALUES (
                 '${req.body.name}',
                 '${req.body.description}',
@@ -90,7 +92,8 @@ app.post("/api/junction/add", function(req, res) {
                 '${req.body.province}',
                 '${req.body.postal_code}',
                 '${req.body.latitude}',
-                '${req.body.longitude}'
+                '${req.body.longitude}',
+                '${req.body.pi_mac}'
                 )`, function(err, result) {
                 if (err) {
                     handleError(res, err.message, "Failed to add junction.");
@@ -191,10 +194,10 @@ app.post("/api/user/add", function(req, res) {
                             '${street}',
                             '${city}',
                             '${province}',
-                            '${postal_code}',
+                            '${postal_code}'
                         )`, function(err, result) { 
                         if (err) {
-                            handleError(res, err.message, "Failed to add user.");
+                            handleError(res, err.message, "Failed to add user3.");
                         } else {
                             connection.query(`INSERT INTO login (user_id, username, password) VALUES(
                                 '${result.insertId}',
@@ -202,7 +205,7 @@ app.post("/api/user/add", function(req, res) {
                                 '${req.body.password}'          
                             )`, function(err2, result2) {
                             if (err2) {
-                                handleError(res, err2.message, "Failed to add system user.");
+                                handleError(res, err2.message, "Failed to add user4.");
                             } else {
                                 res.status(204);
                                 res.end();
