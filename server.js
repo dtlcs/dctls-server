@@ -150,7 +150,7 @@ app.get("/api/user/junctions/:userid", function(req, res) {
     });
 });
 
-// Add new admin-user -system user
+// Add user
 app.post("/api/user/add", function(req, res) {
     if (!req.body.name) {
         handleError(res, "Invalid user input", "Must provide a name.", 400);
@@ -168,7 +168,7 @@ app.post("/api/user/add", function(req, res) {
         if (err) {
             handleError(res, err.message, "Failed to add user.");
         } else if (rows.length > 0) {
-            res.status(400).json("user NIC already exist.");
+            res.status(400).json("User NIC already exist.");
         } else {
             connection.query(`SELECT * FROM user WHERE email = '${req.body.email}'`, function(err, rows, fields) {
                 if (err) {
@@ -194,8 +194,8 @@ app.post("/api/user/add", function(req, res) {
                             if (err2) {
                                 handleError(res, err2.message, "Failed to add system user.");
                             } else {
-                                // res.status(200).json(result);
-                                res.status(200).json(result2);
+                                res.status(204);
+                                res.end();
                             }
                         });
                         }
@@ -205,3 +205,63 @@ app.post("/api/user/add", function(req, res) {
         }
     });
 });
+
+// Update user
+app.post("/api/user/update", function(req, res) {
+    if (!req.body.id) {
+        handleError(res, "Invalid user input", "Must provide a user ID.", 400);
+    }
+
+    connection.query(`SELECT * FROM user WHERE id = '${req.body.id}'`, function(err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to add user.");
+        } else if (rows.length < 0) {
+            res.status(400).json("User does not exist.");
+        } else {
+            var name = (req.body.name == undefined) ? '' : `name = '${req.body.name}', `;
+            var nic = (req.body.nic == undefined) ? '' : `nic = '${req.body.nic}', `;
+            var role_id = (req.body.role_id == undefined) ? '' : `role_id = '${req.body.role_id}', `;
+            var email = (req.body.email == undefined) ? '' : `email = '${req.body.email}', `;
+            var telephone = (req.body.telephone == undefined) ? '' : `telephone = '${req.body.telephone}', `;
+            var street = (req.body.street == undefined) ? '' : `street = '${req.body.street}', `;
+            var city = (req.body.city == undefined) ? '' : `city = '${req.body.city}', `;
+            var province = (req.body.province == undefined) ? '' : `province = '${req.body.province}', `;
+            var postal_code = (req.body.postal_code == undefined) ? '' : `postal_code = '${req.body.postal_code}', `;
+            var username = (req.body.username == undefined) ? '' : `username = '${req.body.username}', `;
+            var password = (req.body.password == undefined) ? '' : `password = '${req.body.password}', `;
+
+            connection.query(`UPDATE user SET 
+                ${name}
+                ${nic}
+                ${role_id}
+                ${email}
+                ${telephone}
+                ${street}
+                ${city}
+                ${province}
+                ${postal_code}
+                id = '${req.body.id}'
+                WHERE id = ${req.body.id}
+                `, function(err, result) { 
+                if (err) {
+                    handleError(res, err.message, "Failed to update user.");
+                } else {
+                    connection.query(`UPDATE login SET
+                        ${username}
+                        ${password}
+                        user_id = '${req.body.id}'
+                        WHERE user_id = ${req.body.id}         
+                    `, function(err2, result2) {
+                    if (err2) {
+                        handleError(res, err2.message, "Failed to update user.");
+                    } else {
+                        res.status(204);
+                        res.end();
+                    }
+                });
+                }
+            });
+        }
+    });
+});
+
