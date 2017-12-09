@@ -43,6 +43,17 @@ app.get("/api/users/all", function(req, res) {
     });
 });
 
+// Get all users
+app.get("/api/user/:id", function(req, res) {
+    connection.query(`SELECT * FROM user WHERE id = '${req.params.id}'`, function(err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to get user details.");
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+});
+
 // Add junction
 app.post("/api/junction/add", function(req, res) {
     var newJunction = req.body;
@@ -171,7 +182,7 @@ app.post("/api/user/add", function(req, res) {
                             '${req.body.nic}',
                             '${req.body.role_id}',
                             '${req.body.email}'
-                        )`, function(err, result) {
+                        )`, function(err, result) { 
                         if (err) {
                             handleError(res, err.message, "Failed to add user.");
                         } else {
