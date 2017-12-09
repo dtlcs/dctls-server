@@ -28,32 +28,40 @@ client.on('connect', function () {
   // Subscribe to the pi data stream
   client.subscribe('pi/+/data', function () {
     client.on('message', function (topic, message, packet) {
-      // pimac:r1l1:r1l2:r1l3:r1l4:...:r4l6 - 24 lane density values
-      param = message.split(':');
-
       console.log("Received '" + message + "' on '" + topic + "'");
-      connection.query(`INSERT INTO traffic (year, month, day, hour, minute, junction_id, road_id, lane_id, density) VALUES(
-        '${param[0]}',
-        '${param[1]}',
-        '${param[2]}',
-        '${param[3]}',
-        '${param[4]}',
-        '${param[5]}',
-        '${param[6]}',
-        '${param[7]}',
-        '${param[8]}'          
-      )`, function(err, result) {
-      if (err2) {
-          handleError(res, err.message, "Failed to add the traffic data.");
-      } else {
-          res.status(200).json(result);
-      }
-    });
+
+      // pimac:r1l1:r1l2:r1l3:r1l4:...:r4l6 - 24 lane density values
+      let data = message.toString();
+      let piMac = data.substring(0, data.indexOf(':'))
+      let density = data.substring(data.indexOf(':') + 1)
+
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth();
+      let day = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+
+      mqttMysqlConnection.query(`SELECT id FROM junction WHERE pi_mac = '${piMac}'`, function (err, rows, fields) {
+        if (err) {
+          handleError(res, err.message, "Failed to add user.");
+        } else if (rows.length == 1) {
+          mqttMysqlConnection.query(`INSERT INTO traffic (year, month, day, hour, minute, junction_id, density) VALUES
+          ('${year}', '${month}', '${day}', '${hour}', '${minute}', '${rows[0].id}', '${density}')
+          `, function (err, result) {
+              if (err) {
+                console.log("Failed to add the traffic data.");
+              } 
+            });
+        } else {
+          console.log("Unknown error.");
+        }
+      });
     });
   });
 
   // Publish commands to pi
-  router.post('/cmd', function (req, res) {         
+  router.post('/cmd', function (req, res) {
     var msg = JSON.stringify({
       date: new Date().toString(),
       msg: req.body.msg
