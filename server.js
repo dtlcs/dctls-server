@@ -177,11 +177,21 @@ app.post("/api/user/add", function(req, res) {
                     res.status(400).json("Email already exist.");
                 } else {
                     var lastId = 0;
-                    connection.query(`INSERT INTO user (name, nic, role_id, email) VALUES(
+                    var telephone = (req.body.telephone == undefined) ? 'NULL' : req.body.telephone;
+                    var street = (req.body.street == undefined) ? 'NULL' : eq.body.street;
+                    var city = (req.body.city == undefined) ? 'NULL' : req.body.city;
+                    var province = (req.body.province == undefined) ? 'NULL' : req.body.province;
+                    var postal_code = (req.body.postal_code == undefined) ? 'NULL' : req.body.postal_code;
+                    connection.query(`INSERT INTO user (name, nic, role_id, email, telephone, street, city, province, postal_code) VALUES(
                             '${req.body.name}',
                             '${req.body.nic}',
                             '${req.body.role_id}',
-                            '${req.body.email}'
+                            '${req.body.email}',
+                            '${telephone}',
+                            '${street}',
+                            '${city}',
+                            '${province}',
+                            '${postal_code}',
                         )`, function(err, result) { 
                         if (err) {
                             handleError(res, err.message, "Failed to add user.");
