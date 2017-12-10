@@ -44,13 +44,13 @@ client.on('connect', function () {
 
       mqttMysqlConnection.query(`SELECT id FROM junction WHERE pi_mac = '${piMac}'`, function (err, rows, fields) {
         if (err) {
-          handleError(res, err.message, "Failed to add user.");
+          handleError(res, err.message, "Failed to add traffic data.");
         } else if (rows.length == 1) {
           mqttMysqlConnection.query(`INSERT INTO traffic (year, month, day, hour, minute, junction_id, density) VALUES
           ('${year}', '${month}', '${day}', '${hour}', '${minute}', '${rows[0].id}', '${density}')
           `, function (err, result) {
               if (err) {
-                console.log("Failed to add the traffic data.");
+                console.log("Failed to add traffic data.");
               } 
             });
         } else {
@@ -61,12 +61,12 @@ client.on('connect', function () {
   });
 
   // Publish commands to pi
-  router.post('/cmd', function (req, res) {
-    var msg = JSON.stringify({
-      date: new Date().toString(),
-      msg: req.body.msg
-    });
-    client.publish('pi/' + req.body.pimac + '/cmd', msg, function () {
+  router.post('/*/cmd', function (req, res) {
+    // var msg = JSON.stringify({
+    //   date: new Date().toString(),
+    //   msg: req.body.msg
+    // });
+    client.publish('pi/' + req.body.pimac + '/cmd', req.body.msg, function () {
       res.writeHead(204, { 'Connection': 'keep-alive' });
       res.end();
     });

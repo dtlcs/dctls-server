@@ -116,6 +116,17 @@ app.get("/api/junctions/name", function(req, res) {
     });
 });
 
+// Get junction list
+app.get("/api/junctions/all", function(req, res) {
+    connection.query('SELECT * FROM junction', function(err, rows, fields) {
+        if (err) {
+            handleError(res, err.message, "Failed to get junction list.");
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+});
+
 // Authenticate user
 app.post("/api/user/authenticate", function(req, res) {
     var newJunction = req.body;
