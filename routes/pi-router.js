@@ -1,27 +1,13 @@
 var express = require('express');
-var router = express.Router();
+var piRouter = express.Router();
 var mqtt = require('mqtt');
-url = require('url');
-var mysql = require('mysql');
-
-var mqttMysqlConnection = mysql.createPool({
-  host: "yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  user: "ae8ptu9hakhbthtj",
-  password: "jy5105xcnjkesh5i",
-  dateStrings: true,
-  database: "j95ambgc4f7zrfai"
-});
+var url = require('url');
+var connection = require('../database/mysql-connection');
 
 // Parse
 var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
 var auth = (mqtt_url.auth || ':').split(':');
 var client = mqtt.connect(mqtt_url);
-
-// Middleware that is specific to this router
-router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-})
 
 // When connected
 client.on('connect', function () {
@@ -42,17 +28,17 @@ client.on('connect', function () {
       let hour = date.getHours();
       let minute = date.getMinutes();
 
-      mqttMysqlConnection.query(`SELECT id FROM junction WHERE pi_mac = '${piMac}'`, function (err, rows, fields) {
+      connection.query(`SELECT id FROM junction WHERE pi_mac = '${piMac}'`, function (err, rows, fields, next) {
         if (err) {
-          handleError(res, err.message, "Failed to add traffic data.");
+          next(err);
         } else if (rows.length == 1) {
-          mqttMysqlConnection.query(`INSERT INTO traffic (year, month, day, hour, minute, junction_id, density) VALUES
+          connection.query(`INSERT INTO traffic (year, month, day, hour, minute, junction_id, density) VALUES
           ('${year}', '${month}', '${day}', '${hour}', '${minute}', '${rows[0].id}', '${density}')
           `, function (err, result) {
-              if (err) {
-                console.log("Failed to add traffic data.");
-              } 
-            });
+            if (err) {
+              console.log("Failed to add traffic data.");
+            }
+          });
         } else {
           console.log("Unknown error.");
         }
@@ -61,16 +47,12 @@ client.on('connect', function () {
   });
 
   // Publish commands to pi
-  router.post('/*/cmd', function (req, res) {
-    // var msg = JSON.stringify({
-    //   date: new Date().toString(),
-    //   msg: req.body.msg
-    // });
+  piRouter.post('/*/cmd', function (req, res, next) {
     client.publish('pi/' + req.body.pimac + '/cmd', req.body.msg, function () {
-      res.writeHead(204, { 'Connection': 'keep-alive' });
+      res.writeHead(204, {'Connection': 'keep-alive'});
       res.end();
     });
   });
 });
 
-module.exports = router;
+module.exports = piRouter;

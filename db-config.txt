@@ -1,0 +1,5 @@
+Connection String : mysql://ae8ptu9hakhbthtj:jy5105xcnjkesh5i@yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/j95ambgc4f7zrfai
+Host		          : yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+Username	        : ae8ptu9hakhbthtj
+Password	        : jy5105xcnjkesh5i
+Port		          : 3306
