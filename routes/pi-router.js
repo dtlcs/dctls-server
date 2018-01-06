@@ -18,8 +18,8 @@ client.on('connect', function () {
 
       // pimac:r1l1:r1l2:r1l3:r1l4:...:r4l6 - 24 lane density values
       let data = message.toString();
-      let piMac = data.substring(0, data.indexOf(':'))
-      let density = data.substring(data.indexOf(':') + 1)
+      let piMac = data.substring(0, data.indexOf(':'));
+      let density = data.substring(data.indexOf(':') + 1);
 
       let date = new Date();
       let year = date.getFullYear();

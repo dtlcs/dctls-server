@@ -26,7 +26,7 @@ junctionRouter.post("/add", function (req, res, next) {
   } else if (!req.body.pi_mac) {
     err.status = 'Invalid Pi MAC address';
   }
-  if(err.statusCode){
+  if (err.statusCode) {
     next(err);
     return;
   }

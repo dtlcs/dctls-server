@@ -7,12 +7,12 @@ userRouter.get("/all", function (req, res, next) {
   connection.query(`SELECT user.id, user.name, user.nic, user.email, user.telephone, user.street,
   user.city, user.province, user.postal_code, role.name AS role FROM user 
   INNER JOIN role WHERE user.role_id = role.id`, function (err, rows, fields) {
-      if (err) {
-        next(err);
-      } else {
-        res.status(200).json(rows);
-      }
-    });
+    if (err) {
+      next(err);
+    } else {
+      res.status(200).json(rows);
+    }
+  });
 });
 
 // Get user by id
@@ -48,14 +48,14 @@ userRouter.post("/authenticate", function (req, res, next) {
   connection.query(`SELECT * FROM user 
      INNER JOIN login ON user.id = login.user_id 
      WHERE username = '${req.body.username}' AND password = '${req.body.password}'`, function (err, rows, fields) {
-      if (err) {
-        next(err);
-      } else if (rows.length > 0) {
-        res.status(200).json(rows);
-      } else {
-        res.status(400).json("Username/password incorrect.");
-      }
-    });
+    if (err) {
+      next(err);
+    } else if (rows.length > 0) {
+      res.status(200).json(rows);
+    } else {
+      res.status(400).json("Username/password incorrect.");
+    }
+  });
 });
 
 // Get user junction list
@@ -63,12 +63,12 @@ userRouter.get("/junctions/:userid", function (req, res, next) {
   connection.query(`SELECT * FROM junction 
     INNER JOIN junction_has_traffic_officer ON junction.id = junction_has_traffic_officer.junction_id 
     WHERE junction_has_traffic_officer.traffic_officer_user_id = '${req.params.userid}'`, function (err, rows, fields) {
-      if (err) {
-        next(err);
-      } else {
-        res.status(200).json(rows);
-      }
-    });
+    if (err) {
+      next(err);
+    } else {
+      res.status(200).json(rows);
+    }
+  });
 });
 
 // Add user
@@ -135,24 +135,24 @@ userRouter.post("/add", function (req, res, next) {
                             '${province}',
                             '${postal_code}'
                         )`, function (err, result) {
-              if (err) {
-                next(err);
-              } else {
-                console.log("cat4");
-                connection.query(`INSERT INTO login (user_id, username, password) VALUES(
+            if (err) {
+              next(err);
+            } else {
+              console.log("cat4");
+              connection.query(`INSERT INTO login (user_id, username, password) VALUES(
                                 '${result.insertId}',
                                 '${req.body.email}',
                                 '${req.body.password}'          
                             )`, function (err2, result2) {
-                    if (err2) {
-                      handleError(res, err2.message, "Failed to add user.");
-                    } else {
-                      res.status(204);
-                      res.end();
-                    }
-                  });
-              }
-            });
+                if (err2) {
+                  handleError(res, err2.message, "Failed to add user.");
+                } else {
+                  res.status(204);
+                  res.end();
+                }
+              });
+            }
+          });
         }
       });
     }
@@ -200,24 +200,24 @@ userRouter.post("/update", function (req, res, next) {
                 id = '${req.body.id}'
                 WHERE id = ${req.body.id}
                 `, function (err, result) {
-          if (err) {
-            next(err);
-          } else {
-            connection.query(`UPDATE login SET
+        if (err) {
+          next(err);
+        } else {
+          connection.query(`UPDATE login SET
                         ${username}
                         ${password}
                         user_id = '${req.body.id}'
                         WHERE user_id = ${req.body.id}         
                     `, function (err2, result2) {
-                if (err2) {
-                  handleError(res, err2.message, "Failed to update user.");
-                } else {
-                  res.status(204);
-                  res.end();
-                }
-              });
-          }
-        });
+            if (err2) {
+              handleError(res, err2.message, "Failed to update user.");
+            } else {
+              res.status(204);
+              res.end();
+            }
+          });
+        }
+      });
     }
   });
 });

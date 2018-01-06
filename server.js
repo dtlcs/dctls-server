@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var app = express();
 app.use(bodyParser.json());
 
+// Allow CORS
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -11,6 +12,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Add routers
 var piRouter = require('./routes/pi-router');
 var userRouter = require('./routes/user-router');
 var junctionRouter = require('./routes/junction-router');
