@@ -1,7 +1,7 @@
-var express = require("express");
-var bodyParser = require("body-parser");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-var app = express();
+const app = express();
 app.use(bodyParser.json());
 
 // Allow CORS
@@ -13,20 +13,20 @@ app.use(function (req, res, next) {
 });
 
 // Add routers
-var piRouter = require('./routes/pi-router');
-var userRouter = require('./routes/user-router');
-var junctionRouter = require('./routes/junction-router');
-var roleRouter = require('./routes/role-router');
+const piRouter = require('./routes/pi-router');
+const userRouter = require('./routes/user-router');
+const junctionRouter = require('./routes/junction-router');
+const roleRouter = require('./routes/role-router');
 app.use('/pi', piRouter);
 app.use('/user', userRouter);
 app.use('/junction', junctionRouter);
 app.use('/role', roleRouter);
 
-var genericErrorHandler = require('./middleware/error-handler');
+const genericErrorHandler = require('./middleware/error-handler');
 app.use(genericErrorHandler);
 
 // Initialize the app.
-var server = app.listen(process.env.PORT || 7000, function () {
-  var port = server.address().port;
-  console.log("STLS Server now running on port", port);
+const server = app.listen(process.env.PORT || 7000, function () {
+    let port = server.address().port;
+    console.log("STLS Server now running on port", port);
 });
