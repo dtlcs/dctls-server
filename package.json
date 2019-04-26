@@ -8,7 +8,7 @@
     "dev": "npm run build && nodemon dist/server.js"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "core-js": "^2.6.3",
     "express": "^4.16.4",
     "mqtt": "^2.18.8",
