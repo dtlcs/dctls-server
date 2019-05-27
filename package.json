@@ -11,7 +11,7 @@
     "body-parser": "^1.18.3",
     "core-js": "^2.6.3",
     "express": "^4.16.4",
-    "mqtt": "^2.18.8",
+    "mqtt": "^3.0.0",
     "mysql": "^2.16.0"
   },
   "devDependencies": {
