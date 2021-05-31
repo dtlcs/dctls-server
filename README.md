@@ -1,1 +1,1 @@
-# stls-server
+# risk-of-rain-2-server
