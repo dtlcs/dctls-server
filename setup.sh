@@ -1,5 +1,5 @@
 # Update packages.
-sudo apt-get Update
+sudo apt-get update
 
 # Install ufw.
 sudo apt-get install ufw
@@ -13,7 +13,9 @@ ufw allow 27016/udp
 cd ~
 
 # Create the mods directory.
-mkdir /home/ror2mods
+cp ror2mods /home
+
+sudo apt-get install docker docker.io
 
 # Run Risk of Rain 2 docker.
 docker run \
