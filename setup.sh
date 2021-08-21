@@ -24,11 +24,11 @@ docker build . -t ror
 docker run -it \
 -p 27015:27015/udp \
 -p 27016:27016/udp \
--v /home/ror2mods:/home/steam/ror2ds-mods \
+-v ${PWD}/ror2mods:/home/steam/ror2ds-mods \
 --name 'ror2' \
 -e R2_ENABLE_MODS=1 \
 -e R2_PSW='cat' \
 -e R2_PLAYERS=10 \
 -e R2_HOSTNAME='CHAMBERS' \
 -e R2_HEARTBEAT=1 \
-ror
+avivace/ror2server:latest
