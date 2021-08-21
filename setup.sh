@@ -12,13 +12,7 @@ ufw allow 27016/udp
 # Go to home.
 cd ~
 
-# # Create the mods directory.
-# mkdir /home/ror2mods
-
 sudo apt-get install docker docker.io
-
-# Build ror-docker
-# docker build . -t ror
 
 # Run Risk of Rain 2 docker.
 docker run -it \
