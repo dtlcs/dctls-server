@@ -1,0 +1,11 @@
+{
+    "name": "Aerolt",
+    "version_number": "1.0.0",
+    "website_url": "https://www.buymeacoffee.com/lodington",
+    "description": "RoRCheats ReWrite Aerolt! New UI and new features to come!",
+    "dependencies": [
+        "tristanmcpherson-R2API-3.0.30",
+        "bbepis-BepInExPack-5.4.9"
+
+    ]
+}

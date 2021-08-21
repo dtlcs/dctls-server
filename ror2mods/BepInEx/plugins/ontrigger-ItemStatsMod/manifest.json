@@ -1,0 +1,10 @@
+{
+    "name": "ItemStatsMod",
+    "version_number": "2.2.1",
+    "website_url": "https://github.com/ontrigger/ItemStatsMod",
+    "description": "Calculates and shows stack bonuses in the item tooltip. Now with BepIn support!",
+    "dependencies": [
+        "bbepis-BepInExPack-5.3.1",
+        "tristanmcpherson-R2API-2.5.14"
+    ]
+}

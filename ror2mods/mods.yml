@@ -1,0 +1,185 @@
+- manifestVersion: 1
+  name: bbepis-BepInExPack
+  authorName: bbepis
+  websiteUrl: https://thunderstore.io/package/bbepis/BepInExPack/
+  displayName: BepInExPack
+  description: Unified BepInEx all-in-one modding pack - plugin framework, detour library
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies: []
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 5
+    minor: 4
+    patch: 9
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\core\icon.png
+- manifestVersion: 1
+  name: tristanmcpherson-R2API
+  authorName: tristanmcpherson
+  websiteUrl: https://thunderstore.io/package/tristanmcpherson/R2API/
+  displayName: R2API
+  description: A modding API for Risk of Rain 2
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - bbepis-BepInExPack-5.4.9
+    - RiskofThunder-HookGenPatcher-1.2.1
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 3
+    minor: 0
+    patch: 30
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\tristanmcpherson-R2API\icon.png
+- manifestVersion: 1
+  name: RiskofThunder-HookGenPatcher
+  authorName: RiskofThunder
+  websiteUrl: https://thunderstore.io/package/RiskofThunder/HookGenPatcher/
+  displayName: HookGenPatcher
+  description: MMHOOK generation at runtime.
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - bbepis-BepInExPack-5.4.9
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 1
+    minor: 2
+    patch: 1
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\RiskofThunder-HookGenPatcher\icon.png
+- manifestVersion: 1
+  name: niwith-DropinMultiplayer
+  authorName: niwith
+  websiteUrl: https://thunderstore.io/package/niwith/DropinMultiplayer/
+  displayName: DropinMultiplayer
+  description: Drop in and out of multiplayer with your friends. Automatically
+    adds items to help you catch up.
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - bbepis-BepInExPack-5.3.1
+    - tristanmcpherson-R2API-3.0.0
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 1
+    minor: 0
+    patch: 16
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\niwith-DropinMultiplayer\icon.png
+- manifestVersion: 1
+  name: Lodington-Aerolt
+  authorName: Lodington
+  websiteUrl: https://thunderstore.io/package/Lodington/Aerolt/
+  displayName: Aerolt
+  description: RoRCheats ReWrite Aerolt! New UI and new features to come!
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - tristanmcpherson-R2API-3.0.30
+    - bbepis-BepInExPack-5.4.9
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 1
+    minor: 0
+    patch: 0
+  enabled: false
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\Lodington-Aerolt\icon.png
+- manifestVersion: 1
+  name: XoXFaby-BetterUI
+  authorName: XoXFaby
+  websiteUrl: https://thunderstore.io/package/XoXFaby/BetterUI/
+  displayName: BetterUI
+  description: Now with better buff tooltips! Various UI improvements like ordered
+    items with multiple ways of sorting, DPSMeter, Item Counters,
+    Skill/Equipment/Item Information, Command/Scrapper counters and other
+    improvements, customizable StatsDisplay, and much more.
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - bbepis-BepInExPack-5.4.9
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 2
+    minor: 2
+    patch: 0
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\XoXFaby-BetterUI\icon.png
+- manifestVersion: 1
+  name: ontrigger-ItemStatsMod
+  authorName: ontrigger
+  websiteUrl: https://thunderstore.io/package/ontrigger/ItemStatsMod/
+  displayName: ItemStatsMod
+  description: Calculates and shows stack bonuses in the item tooltip. Now with
+    BepIn support!
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - bbepis-BepInExPack-5.3.1
+    - tristanmcpherson-R2API-2.5.14
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 2
+    minor: 2
+    patch: 1
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\ontrigger-ItemStatsMod\icon.png
+- manifestVersion: 1
+  name: NotTsunami-ShowDeathCause
+  authorName: NotTsunami
+  websiteUrl: https://thunderstore.io/package/NotTsunami/ShowDeathCause/
+  displayName: ShowDeathCause
+  description: Tells you and your friends how you were killed in chat.
+  gameVersion: "0"
+  networkMode: both
+  packageType: other
+  installMode: managed
+  loaders: []
+  dependencies:
+    - tristanmcpherson-R2API-3.0.30
+    - bbepis-BepInExPack-5.4.9
+  incompatibilities: []
+  optionalDependencies: []
+  versionNumber:
+    major: 1
+    minor: 0
+    patch: 5
+  enabled: true
+  icon: C:\Users\Zora
+    Zephyr\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\NotTsunami-ShowDeathCause\1.0.5\icon.png
