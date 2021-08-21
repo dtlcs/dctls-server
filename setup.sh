@@ -13,12 +13,15 @@ ufw allow 27016/udp
 cd ~
 
 # Create the mods directory.
-cp ror2mods /home
+mkdir /home/ror2mods
 
 sudo apt-get install docker docker.io
 
+# Build ror-docker
+docker build . -t ror
+
 # Run Risk of Rain 2 docker.
-docker run \
+docker run -it \
 -p 27015:27015/udp \
 -p 27016:27016/udp \
 -v /home/ror2mods:/home/steam/ror2ds-mods \
@@ -28,4 +31,4 @@ docker run \
 -e R2_PLAYERS=10 \
 -e R2_HOSTNAME='CHAMBERS' \
 -e R2_HEARTBEAT=1 \
-avivace/ror2server:latest
+ror

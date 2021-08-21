@@ -20,9 +20,3 @@ docker volume ls
 
 # The following command show only show the default networks:
 docker network ls
-
-# Delete storage
-rm -rf ~/ocr/storage
-
-# Delete log
-rm ~/ocr/log.txt
