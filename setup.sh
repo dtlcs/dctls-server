@@ -9,9 +9,6 @@ ufw enable
 ufw allow 27015/udp
 ufw allow 27016/udp
 
-# Go to home.
-cd ~
-
 sudo apt-get install docker docker.io
 
 # Run Risk of Rain 2 docker.
